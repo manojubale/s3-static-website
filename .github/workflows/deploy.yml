@@ -13,13 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # If using React/Vue/Angular
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -29,7 +22,7 @@ jobs:
 
       - name: Upload to S3
         run: |
-          aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} --delete
+          aws s3 sync . s3://${{ secrets.S3_BUCKET }} --delete
 
       - name: Invalidate CloudFront cache
         run: |
